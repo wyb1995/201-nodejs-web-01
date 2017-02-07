@@ -1,14 +1,15 @@
-let Item = require('../model/items');
+let Category = require('../model/category');
 let async = require('async');
+let Item = require('../model/items');
 
-class ItemController {
+class CategoryController {
     getAll(req, res, next) {
         async.waterfall([
             (done) => {
-                Item.count(done);
+                Category.count(done);
             },
             (count, done) => {
-                Item.find({}).populate('category').exec((err, doc) => {
+                Category.find({}, (err, doc) => {
                     done(err, doc, count);
                 })
             }
@@ -16,19 +17,20 @@ class ItemController {
             if (err) {
                 return next(err);
             }
-            return res.send({totalCount: count, items: doc});
+
+            return res.send({totalCount: count, categorys: doc});
         })
     }
 
     getOne(req, res, next) {
         let _id = req.params.id;
 
-        Item.findOne({_id}).populate('category').exec((err, doc) => {
-            if (err) {
+        Category.findOne({_id}, (err, doc)=> {
+            if(err){
                 return next(err);
             }
 
-            if (!doc) {
+            if(!doc) {
                 return res.sendStatus(404);
             }
 
@@ -38,22 +40,36 @@ class ItemController {
 
     create(req, res, next) {
         let name = req.body.name;
-        let price = req.body.price;
-        let categoryId = req.body.categoryId;
 
-        Item.create({name, price, category: categoryId}, (err, doc) => {
+        Category.create({name}, (err, doc) => {
             if (err) {
                 return next(err);
             }
-            return res.send(`/items/${doc._id}`);
+
+            return res.send(`/categorys/${doc._id}`);
         })
     }
 
     delete(req, res, next) {
         let _id = req.params.id;
 
-        Item.remove({_id}, (err)=> {
-            if(err){
+        async.waterfall([
+            (done)=> {
+                Item.findOne({_id}, done);
+            },
+            (doc, done)=> {
+                if(doc){
+                    done(true, null);
+                }
+
+                Category.findOneAndRemove({_id}, done);
+            }
+        ], (err)=> {
+            if(err === true) {
+                return res.sendStatus(403);
+            }
+
+            if(err) {
                 return next(err);
             }
 
@@ -63,16 +79,17 @@ class ItemController {
 
     update(req, res, next) {
         let _id = req.params.id;
-        let {categoryId, name, price} = req.body;
+        let {name} = req.body;
 
-        Item.findOneAndUpdate({_id}, {category: categoryId, name, price}, (err)=> {
+        Category.findOneAndUpdate({_id}, {name}, (err)=> {
             if(err) {
                 return next(err);
             }
 
             return res.sendStatus(204);
         })
+
     }
 }
 
-module.exports = ItemController;
+module.exports = CategoryController;
