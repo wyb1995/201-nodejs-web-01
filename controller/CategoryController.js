@@ -25,12 +25,12 @@ class CategoryController {
     getOne(req, res, next) {
         let _id = req.params.id;
 
-        Category.findOne({_id}, (err, doc)=> {
-            if(err){
+        Category.findOne({_id}, (err, doc) => {
+            if (err) {
                 return next(err);
             }
 
-            if(!doc) {
+            if (!doc) {
                 return res.sendStatus(404);
             }
 
@@ -54,22 +54,22 @@ class CategoryController {
         let _id = req.params.id;
 
         async.waterfall([
-            (done)=> {
+            (done) => {
                 Item.findOne({_id}, done);
             },
-            (doc, done)=> {
-                if(doc){
+            (doc, done) => {
+                if (doc) {
                     done(true, null);
                 }
 
                 Category.findOneAndRemove({_id}, done);
             }
-        ], (err)=> {
-            if(err === true) {
+        ], (err) => {
+            if (err === true) {
                 return res.sendStatus(403);
             }
 
-            if(err) {
+            if (err) {
                 return next(err);
             }
 
@@ -81,8 +81,8 @@ class CategoryController {
         let _id = req.params.id;
         let {name} = req.body;
 
-        Category.findOneAndUpdate({_id}, {name}, (err)=> {
-            if(err) {
+        Category.findOneAndUpdate({_id}, {name}, (err) => {
+            if (err) {
                 return next(err);
             }
 

@@ -52,9 +52,12 @@ class ItemController {
     delete(req, res, next) {
         let _id = req.params.id;
 
-        Item.remove({_id}, (err)=> {
+        Item.findOneAndRemove({_id}, (err, doc)=> {
             if(err){
                 return next(err);
+            }
+            if(!doc){
+                return res.sendStatus(404)
             }
 
             return res.sendStatus(204);
