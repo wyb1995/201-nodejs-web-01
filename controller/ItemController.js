@@ -1,5 +1,6 @@
 let Item = require('../model/items');
 let async = require('async');
+let constant = require('../constant');
 
 class ItemController {
     getAll(req, res, next) {
@@ -16,7 +17,7 @@ class ItemController {
             if (err) {
                 return next(err);
             }
-            return res.send({totalCount: count, items: doc});
+            return res.status(constant.httpCode.OK).send({totalCount: count, items: doc});
         })
     }
 
@@ -29,10 +30,10 @@ class ItemController {
             }
 
             if (!doc) {
-                return res.sendStatus(404);
+                return res.sendStatus(constant.httpCode.NOT_FOUND);
             }
 
-            return res.send(doc);
+            return res.status(constant.httpCode.OK).send(doc);
         })
     }
 
@@ -45,7 +46,7 @@ class ItemController {
             if (err) {
                 return next(err);
             }
-            return res.send(`/items/${doc._id}`);
+            return res.status(constant.httpCode.CREATED).send(`/items/${doc._id}`);
         })
     }
 
@@ -57,10 +58,10 @@ class ItemController {
                 return next(err);
             }
             if(!doc){
-                return res.sendStatus(404)
+                return res.sendStatus(constant.httpCode.NOT_FOUND)
             }
 
-            return res.sendStatus(204);
+            return res.sendStatus(constant.httpCode.NO_CONTENT);
         })
     }
 
@@ -73,7 +74,7 @@ class ItemController {
                 return next(err);
             }
 
-            return res.sendStatus(204);
+            return res.sendStatus(constant.httpCode.NO_CONTENT);
         })
     }
 }

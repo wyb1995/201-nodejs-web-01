@@ -1,5 +1,6 @@
 let Cart = require('../model/cart');
 let async = require('async');
+let constant = require('../constant');
 
 class CartController {
     getAll(req, res, next) {
@@ -16,7 +17,7 @@ class CartController {
             if (err) {
                 return next(err);
             }
-            return res.send({totalCount: count, carts: doc});
+            return res.status(constant.httpCode.OK).send({totalCount: count, carts: doc});
         })
     }
 
@@ -29,10 +30,10 @@ class CartController {
             }
 
             if (!doc) {
-                return res.sendStatus(404);
+                return res.sendStatus(constant.httpCode.NOT_FOUND);
             }
 
-            return res.send(doc);
+            return res.status(constant.httpCode.OK).send(doc);
         })
     }
 
@@ -44,7 +45,7 @@ class CartController {
                 return next(err);
             }
 
-            return res.status(201).send(`/carts/${doc._id}`);
+            return res.status(constant.httpCode.CREATED).send(`/carts/${doc._id}`);
         })
     }
 
@@ -56,7 +57,7 @@ class CartController {
                 return next(err);
             }
 
-            return res.sendStatus(204);
+            return res.sendStatus(constant.httpCode.NO_CONTENT);
         })
     }
 
@@ -84,7 +85,7 @@ class CartController {
                 return next(err);
             }
 
-            return res.sendStatus(204);
+            return res.sendStatus(constant.httpCode.NO_CONTENT);
         })
     }
 
@@ -105,7 +106,7 @@ class CartController {
                 return next(err);
             }
 
-            return res.sendStatus(204);
+            return res.sendStatus(constant.httpCode.NO_CONTENT);
         })
     }
 }

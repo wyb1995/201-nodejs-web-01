@@ -1,6 +1,7 @@
 let Category = require('../model/category');
 let async = require('async');
 let Item = require('../model/items');
+let constant = require('../constant');
 
 class CategoryController {
     getAll(req, res, next) {
@@ -18,7 +19,7 @@ class CategoryController {
                 return next(err);
             }
 
-            return res.send({totalCount: count, categorys: doc});
+            return res.status(constant.httpCode.OK).send({totalCount: count, categorys: doc});
         })
     }
 
@@ -31,10 +32,10 @@ class CategoryController {
             }
 
             if (!doc) {
-                return res.sendStatus(404);
+                return res.sendStatus(constant.httpCode.NOT_FOUND);
             }
 
-            return res.send(doc);
+            return res.status(constant.httpCode.OK).send(doc);
         })
     }
 
@@ -46,7 +47,7 @@ class CategoryController {
                 return next(err);
             }
 
-            return res.send(`/categorys/${doc._id}`);
+            return res.status(constant.httpCode.CREATED).send(`/categorys/${doc._id}`);
         })
     }
 
@@ -66,14 +67,14 @@ class CategoryController {
             }
         ], (err) => {
             if (err === true) {
-                return res.sendStatus(403);
+                return res.sendStatus(constant.httpCode.FORBIDDEN);
             }
 
             if (err) {
                 return next(err);
             }
 
-            return res.sendStatus(204);
+            return res.sendStatus(constant.httpCode.NO_CONTENT);
         })
     }
 
@@ -86,7 +87,7 @@ class CategoryController {
                 return next(err);
             }
 
-            return res.sendStatus(204);
+            return res.sendStatus(constant.httpCode.NO_CONTENT);
         })
 
     }
