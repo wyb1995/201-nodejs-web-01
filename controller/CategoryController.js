@@ -47,7 +47,7 @@ class CategoryController {
                 return next(err);
             }
 
-            return res.status(constant.httpCode.CREATED).send(`/categorys/${doc._id}`);
+            return res.status(constant.httpCode.CREATED).send(`/categories/${doc._id}`);
         })
     }
 
@@ -56,7 +56,7 @@ class CategoryController {
 
         async.waterfall([
             (done) => {
-                Item.findOne({_id}, done);
+                Item.findOne({categoryId: _id}, done);
             },
             (doc, done) => {
                 if (doc) {

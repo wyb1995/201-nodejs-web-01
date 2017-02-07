@@ -4,9 +4,9 @@ let Schema = mongoose.Schema;
 
 const CartSchema = new Schema({
     userId: Number,
-    item: [{
+    items: [{
         type: Schema.Types.ObjectId,
-        ref: 'SuperMarket'
+        ref: 'Item'
     }]
 });
 
