@@ -6,23 +6,23 @@ let should = require('should');
 let app = require('../../app');
 let {refreshMongo} = require('../../mongoTool');
 
-describe('cart-spec', ()=> {
+describe('cart-spec', () => {
   beforeEach((done) => {
     refreshMongo();
     done();
   });
 
-  it('GET /carts', (done)=> {
+  it('GET /carts', (done) => {
     request(app)
       .get('/carts')
       .expect(200)
-      .expect((res)=> {
+      .expect((res) => {
         res.body.totalCount.should.equal(1);
       })
       .end(done)
   });
 
-  it('GET /carts/:id', (done)=> {
+  it('GET /carts/:id', (done) => {
     request(app)
       .get('/carts/589950ce5a94250fe845b0aa')
       .expect(200)
@@ -32,7 +32,7 @@ describe('cart-spec', ()=> {
       .end(done)
   });
 
-  it('POST /carts', (done)=> {
+  it('POST /carts', (done) => {
     request(app)
       .post('/carts')
       .send({
@@ -42,14 +42,14 @@ describe('cart-spec', ()=> {
       .end(done)
   });
 
-  it('DELETE /carts/:id', (done)=> {
+  it('DELETE /carts/:id', (done) => {
     request(app)
       .delete('/carts/589950ce5a94250fe845b0aa')
       .expect(204)
       .end(done)
   });
 
-  it('PUT /carts/:id', (done)=> {
+  it('PUT /carts/:id', (done) => {
     request(app)
       .put('/carts/589950ce5a94250fe845b0aa')
       .send({

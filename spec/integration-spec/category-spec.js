@@ -22,17 +22,17 @@ describe('category-spec', () => {
       .end(done)
   });
 
-  it('GET /categories/:id', (done)=> {
+  it('GET /categories/:id', (done) => {
     request(app)
       .get('/categories/589950ce5a94250fe845b0f4')
       .expect(200)
-      .expect((res)=> {
+      .expect((res) => {
         res.body.name.should.equal('fruit');
       })
       .end(done)
   })
 
-  it('POST /categories', (done)=> {
+  it('POST /categories', (done) => {
     request(app)
       .post('/categories')
       .send({
@@ -42,14 +42,14 @@ describe('category-spec', () => {
       .end(done)
   });
 
-  it('DELETE /categories/:id', (done)=> {
+  it('DELETE /categories/:id', (done) => {
     request(app)
       .delete('/categories/589950ce5a94250fe845b0f4')
       .expect(403)
       .end(done);
   });
 
-  it('PUT /categories/:id', (done)=> {
+  it('PUT /categories/:id', (done) => {
     request(app)
       .put('/categories/589950ce5a94250fe845b0f4')
       .send({

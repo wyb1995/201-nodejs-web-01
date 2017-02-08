@@ -24,7 +24,7 @@ describe('item-spec', () => {
     request(app)
       .get('/items/589950ce5a94250fe845b0dd')
       .expect(200)
-      .expect((res)=> {
+      .expect((res) => {
         res.body.name.should.equal('apple');
         res.body.price.should.equal('10');
         res.body.categoryId._id.should.equal('589950ce5a94250fe845b0f4')
@@ -32,7 +32,7 @@ describe('item-spec', () => {
       .end(done);
   });
 
-  it('POST /items', (done)=> {
+  it('POST /items', (done) => {
     request(app)
       .post('/items')
       .send({
@@ -44,14 +44,14 @@ describe('item-spec', () => {
       .end(done)
   });
 
-  it('DELETE /items/:id', (done)=> {
+  it('DELETE /items/:id', (done) => {
     request(app)
       .delete('/items/589950ce5a94250fe845b0dd')
       .expect(204)
       .end(done)
   });
 
-  it('PUT /items/:id', (done)=> {
+  it('PUT /items/:id', (done) => {
     request(app)
       .put('/items/589950ce5a94250fe845b0dd')
       .send({
