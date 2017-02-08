@@ -1,6 +1,7 @@
 const Cart = require('../model/cart');
 const async = require('async');
 const constant = require('../constant');
+const changeItemToItemurl = require('../tool/change-item-to-url');
 
 class CartController {
   getAll(req, res, next) {
@@ -9,7 +10,19 @@ class CartController {
           Cart.count(done);
         },
         carts: (done) => {
-          Cart.find({}, done);
+          Cart.find({}, (err, doc) => {
+            if (err) {
+              done(err, null);
+            }
+
+            let docs = doc.map((data) => {
+              let items = changeItemToItemurl(data.items);
+              let newData = data.toJSON();
+              newData.items = items;
+              return newData;
+            });
+            done(null, docs);
+          });
         }
       }, (err, result) => {
         if (err) {
@@ -27,12 +40,15 @@ class CartController {
       if (err) {
         return next(err);
       }
+      let items = changeItemToItemurl(doc.items);
+      let docs = doc.toJSON();
+      docs.items = items;
 
       if (!doc) {
         return res.sendStatus(constant.httpCode.NOT_FOUND);
       }
 
-      return res.status(constant.httpCode.OK).send(doc);
+      return res.status(constant.httpCode.OK).send(docs);
     })
   }
 
@@ -61,11 +77,11 @@ class CartController {
   update(req, res, next) {
     const _id = req.params.id;
 
-    Cart.findOneAndUpdate({_id}, req.body, (err, doc)=> {
-      if(err){
+    Cart.findOneAndUpdate({_id}, req.body, (err, doc) => {
+      if (err) {
         return next(err);
       }
-      if(!doc){
+      if (!doc) {
         return res.sendStatus(constant.httpCode.NOT_FOUND);
       }
       return res.sendStatus(constant.httpCode.NO_CONTENT);
