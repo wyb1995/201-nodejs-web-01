@@ -6,5 +6,4 @@ module.exports = (items) => {
     data.item = `/item/${item.item}`;
     return data;
   });
-
 };

@@ -28,6 +28,7 @@ class CartController {
         if (err) {
           return next(err);
         }
+        console.log(JSON.stringify(result, null, 2))
         return res.status(constant.httpCode.OK).send(result);
       }
     )
