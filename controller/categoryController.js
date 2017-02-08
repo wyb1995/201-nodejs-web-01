@@ -82,9 +82,13 @@ class CategoryController {
   update(req, res, next) {
     const _id = req.params.id;
 
-    Category.findOneAndUpdate({_id}, req.body, (err) => {
+    Category.findOneAndUpdate({_id}, req.body, (err, doc) => {
       if (err) {
         return next(err);
+      }
+
+      if (!doc) {
+        return res.sendStatus(constant.httpCode.NOT_FOUND);
       }
 
       return res.sendStatus(constant.httpCode.NO_CONTENT);
