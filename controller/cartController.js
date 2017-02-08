@@ -1,7 +1,7 @@
 const Cart = require('../model/cart');
 const async = require('async');
 const constant = require('../constant');
-const changeItemToItemurl = require('../tool/change-item-to-url');
+const changeItemToItemUrl = require('../tool/change-item-to-url');
 
 class CartController {
   getAll(req, res, next) {
@@ -16,7 +16,7 @@ class CartController {
             }
 
             let docs = doc.map((data) => {
-              let items = changeItemToItemurl(data.items);
+              let items = changeItemToItemUrl(data.items);
               let newData = data.toJSON();
               newData.items = items;
               return newData;
@@ -40,7 +40,7 @@ class CartController {
       if (err) {
         return next(err);
       }
-      let items = changeItemToItemurl(doc.items);
+      let items = changeItemToItemUrl(doc.items);
       let docs = doc.toJSON();
       docs.items = items;
 
