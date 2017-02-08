@@ -23,9 +23,9 @@ class CategoryController {
   }
 
   getOne(req, res, next) {
-    const _id = req.params.id;
+    const _id = req.params.categoryId;
 
-    Category.findOne({_id}, (err, doc) => {
+    Category.findById(_id, (err, doc) => {
       if (err) {
         return next(err);
       }
@@ -49,22 +49,22 @@ class CategoryController {
   }
 
   delete(req, res, next) {
-    const _id = req.params.id;
+    const _id = req.params.categoryId;
 
     async.waterfall([
       (done) => {
-        Item.findOne({categoryId: _id}, done);
+        Item.findOne({category: _id}, done);
       },
       (doc, done) => {
         if (doc) {
           done(true, null);
         }
 
-        Category.findOneAndRemove({_id}, done);
+        Category.findByIdAndRemove(_id, done);
       }
     ], (err, doc) => {
       if (err === true) {
-        return res.sendStatus(constant.httpCode.FORBIDDEN);
+        return res.sendStatus(constant.httpCode.BAD_REQUEST);
       }
 
       if (err) {
@@ -80,9 +80,9 @@ class CategoryController {
   }
 
   update(req, res, next) {
-    const _id = req.params.id;
+    const _id = req.params.categoryId;
 
-    Category.findOneAndUpdate({_id}, req.body, (err, doc) => {
+    Category.findByIdAndUpdate(_id, req.body, (err, doc) => {
       if (err) {
         return next(err);
       }

@@ -45,7 +45,7 @@ describe('category-spec', () => {
   it('DELETE /categories/:id', (done) => {
     request(app)
       .delete('/categories/589950ce5a94250fe845b0f4')
-      .expect(403)
+      .expect(400)
       .end(done);
   });
 

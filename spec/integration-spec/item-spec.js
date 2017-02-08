@@ -27,7 +27,7 @@ describe('item-spec', () => {
       .expect((res) => {
         res.body.name.should.equal('apple');
         res.body.price.should.equal('10');
-        res.body.categoryId._id.should.equal('589950ce5a94250fe845b0f4')
+        res.body.category._id.should.equal('589950ce5a94250fe845b0f4')
       })
       .end(done);
   });
@@ -38,7 +38,7 @@ describe('item-spec', () => {
       .send({
         name: "banana",
         price: "12",
-        categoryId: "589950ce5a94250fe845b0f4"
+        category: "589950ce5a94250fe845b0f4"
       })
       .expect(201)
       .end(done)

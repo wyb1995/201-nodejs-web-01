@@ -9,7 +9,7 @@ class ItemController {
         Item.count(done);
       },
       items: (done) => {
-        Item.find({}).populate('categoryId').exec(done)
+        Item.find({}).populate('category').exec(done)
       }
     }, (err, result) => {
       if (err) {
@@ -20,8 +20,8 @@ class ItemController {
   }
 
   getOne(req, res, next) {
-    const _id = req.params.id;
-    Item.findOne({_id}).populate('categoryId').exec((err, doc) => {
+    const _id = req.params.itemId;
+    Item.findById(_id).populate('category').exec((err, doc) => {
       if (err) {
         return next(err);
       }
@@ -44,9 +44,9 @@ class ItemController {
   }
 
   delete(req, res, next) {
-    const _id = req.params.id;
+    const _id = req.params.itemId;
 
-    Item.findOneAndRemove({_id}, (err, doc) => {
+    Item.findByIdAndRemove(_id, (err, doc) => {
       if (err) {
         return next(err);
       }
@@ -59,9 +59,9 @@ class ItemController {
   }
 
   update(req, res, next) {
-    const _id = req.params.id;
+    const _id = req.params.itemId;
 
-    Item.findOneAndUpdate({_id}, req.body, (err, doc) => {
+    Item.findByIdAndUpdate(_id, req.body, (err, doc) => {
       if (err) {
         return next(err);
       }

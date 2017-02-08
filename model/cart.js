@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
-const CartSchema = new Schema({
+const cartSchema = new Schema({
   userId: Number,
   items: [{
     itemCount: Number,
@@ -13,4 +13,6 @@ const CartSchema = new Schema({
   }]
 });
 
-module.exports = mongoose.model('Cart', CartSchema);
+const Cart = mongoose.model('Cart', cartSchema);
+
+module.exports = Cart;
