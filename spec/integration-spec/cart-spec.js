@@ -4,13 +4,9 @@ let request = require('supertest');
 let express = require('express');
 let should = require('should');
 let app = require('../../app');
-let {refreshMongo} = require('../../mongoTool');
 
 describe('cart-spec', () => {
-  beforeEach((done) => {
-    refreshMongo();
-    done();
-  });
+
 
   it('GET /carts', (done) => {
     request(app)

@@ -57,7 +57,7 @@ class CategoryController {
       },
       (doc, done) => {
         if (doc) {
-          done(true, null);
+          return done(true, null);
         }
 
         Category.findByIdAndRemove(_id, done);

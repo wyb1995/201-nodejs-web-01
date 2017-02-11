@@ -7,10 +7,9 @@ let app = require('../../app');
 let {refreshMongo} = require('../../mongoTool');
 
 describe('category-spec', () => {
-  beforeEach((done) => {
-    refreshMongo();
-    done();
-  });
+  // beforeEach((done) => {
+  //   refreshMongo(done);
+  // });
 
   it('GET /categories', (done) => {
     request(app)

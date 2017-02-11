@@ -5,10 +5,9 @@ let app = require('../../app');
 let {refreshMongo} = require('../../mongoTool');
 
 describe('item-spec', () => {
-  beforeEach((done) => {
-    refreshMongo();
-    done();
-  });
+  // beforeEach((done) => {
+  //   refreshMongo(done);
+  // });
 
   it('GET /items', (done) => {
     request(app)

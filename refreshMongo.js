@@ -2,6 +2,8 @@ const {refreshMongo} = require('./mongoTool');
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/supermarket');
 
-refreshMongo();
+refreshMongo(()=> {
+  "use strict";
+  process.exit(0);
+});
 
-mongoose.connection.close();
